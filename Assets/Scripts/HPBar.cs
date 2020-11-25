@@ -8,18 +8,27 @@ public class HPBar : MonoBehaviour
 
     public int HP = 100;
     public Text HP_bar;
-    public GameObject HP_Add_Module;
+
     //Вход в зону
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "damage")
+        if (other.transform.tag == "Damage")
         {
-            HP = HP - 25;
+            if(HP > 0)
+            {
+                HP -= 25;
+
+            }
         }
-        if (other.tag == "HP_Add")
+
+
+        if (other.transform.tag == "HP_Add")
         {
-            HP = HP + 25;
-            HP_Add_Module.SetActive(false);//удаление аптечки
+            if (HP < 100)
+            {
+                HP += 25;
+                Destroy(other.gameObject);
+            }
         }
     }
 
@@ -28,7 +37,7 @@ public class HPBar : MonoBehaviour
     {
         if (HP < 1)
         {
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
         }
         if (HP > 100)
         {

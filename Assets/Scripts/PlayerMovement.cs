@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
         grounded = transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
 
         #region Flags
@@ -138,10 +139,6 @@ public class PlayerMovement : MonoBehaviour
             doorCoor = collision.gameObject.GetComponent<FloorDoor>().pairDoor.transform.position;
         }
     }
-
-
-
-
 
 
 
