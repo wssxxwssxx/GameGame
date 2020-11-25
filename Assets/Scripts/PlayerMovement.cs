@@ -14,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool crouchFlag;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private bool grounded;
+    [SerializeField] private bool onDoor;
+    [SerializeField] private Vector3 doorCoor;
+
+    private float doorTravelYOffset = .5f;
 
     private void Awake()
     {
@@ -56,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
         standingCollider.enabled = !crouchFlag;
         #endregion
         #endregion
+
+        if(onDoor && Input.GetKeyDown(KeyCode.E))
+        {
+            MoveBetweenDoors(doorCoor);
+        }
 
 
     }
@@ -106,8 +115,32 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector2.up * jumpForce;
     }
 
+    private void MoveBetweenDoors(Vector3 position)
+    {
+        if(grounded)
+        transform.position = new Vector3(position.x, position.y - doorTravelYOffset, 0f);
+    }
 
-  
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Door")
+        {
+            onDoor = false;
+            doorCoor = Vector3.zero;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Door")
+        {
+            onDoor = true;
+            doorCoor = collision.gameObject.GetComponent<FloorDoor>().pairDoor.transform.position;
+        }
+    }
+
+
+
 
 
 
