@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private float cameraMovementSpeed = 10f;
     [SerializeField] private float cameraOffsetZ = -10f;
     [SerializeField] private float cameraOffsetY = 2f;
     [SerializeField] private GameObject player;
