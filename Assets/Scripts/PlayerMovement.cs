@@ -10,10 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float crouchSpeed = 2.5f;
     [SerializeField] private Collider2D standingCollider;
 
-    private bool sprintFlag;
-    private bool crouchFlag;
-    private Rigidbody2D rb;
-    private bool grounded;
+    [SerializeField] private bool sprintFlag;
+    [SerializeField] private bool crouchFlag;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private bool grounded;
 
     private void Awake()
     {
@@ -24,8 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
 
-        float movementDirection = Input.GetAxis("Horizontal");
-
+        #region Flags
         #region SprintFlag
 
         if (Input.GetKey(KeyCode.LeftShift) && grounded)
@@ -56,22 +55,49 @@ public class PlayerMovement : MonoBehaviour
         }
         standingCollider.enabled = !crouchFlag;
         #endregion
+        #endregion
 
 
-        if (!sprintFlag && !crouchFlag) 
-            MovePlayer(movementDirection, moveSpeed);
-
-       if (sprintFlag && !crouchFlag)
-            MovePlayer(movementDirection, sprintMoveSpeed);
-
-       if (crouchFlag)
-            MovePlayer(movementDirection, crouchSpeed);
     }
 
-    private void MovePlayer(float movementDirection, float moveSpeed)
+    private void FixedUpdate()
     {
 
-        transform.position += new Vector3(movementDirection, 0, 0) * Time.deltaTime * moveSpeed;
+        if(Input.GetKey(KeyCode.D))
+        {
+            if(!crouchFlag && sprintFlag)
+            {
+                MovePlayer(sprintMoveSpeed);
+            } else if (grounded && crouchFlag)
+            {
+                MovePlayer(crouchSpeed);
+            }
+            else
+                MovePlayer(moveSpeed);
+
+
+
+        } else if (Input.GetKey(KeyCode.A))
+        {
+            if (!crouchFlag && sprintFlag)
+            {
+                MovePlayer(-sprintMoveSpeed);
+            }
+            else if (grounded && crouchFlag)
+            {
+                MovePlayer(-crouchSpeed);
+            }
+            else
+                MovePlayer(-moveSpeed);
+        } else
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+
+  
+    }
+
+    private void MovePlayer(float moveSpeed)
+    {
+        rb.velocity = new Vector3(moveSpeed, rb.velocity.y, 0f);
 
     }
 
@@ -80,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector2.up * jumpForce;
     }
 
+
+  
 
 
 
