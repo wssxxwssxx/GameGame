@@ -21,7 +21,6 @@ public class HPBar : MonoBehaviour
             }
         }
 
-
         if (other.transform.tag == "HP_Add")
         {
             if (HP < 100)

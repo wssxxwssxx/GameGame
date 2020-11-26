@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         rb = transform.GetComponent<Rigidbody>();
     }
 
+
     private void Update()
     {
 
@@ -139,7 +140,6 @@ public class PlayerMovement : MonoBehaviour
             doorCoor = collision.gameObject.GetComponent<FloorDoor>().pairDoor.transform.position;
         }
     }
-
 
 
 }
