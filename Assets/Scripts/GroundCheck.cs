@@ -6,7 +6,7 @@ public class GroundCheck : MonoBehaviour
 {
     public bool isGrounded;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.transform.tag == "Ground")
         {
@@ -14,7 +14,7 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.transform.tag == "Ground")
         {
@@ -22,7 +22,7 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         isGrounded = false;
     }

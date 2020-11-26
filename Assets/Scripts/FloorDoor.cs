@@ -5,30 +5,30 @@ using UnityEngine;
 public class FloorDoor : MonoBehaviour
 {
     public GameObject pairDoor;
-    private SpriteRenderer rend;
-    private Color colorToTurnTo = Color.green;
-    private Color defaultColor = Color.yellow;
+    private MeshRenderer rend;
+    [SerializeField] private Material colorToTurnTo;
+    [SerializeField] private Material defaultColor;
 
 
     private void Start()
     {
-        rend = GetComponent<SpriteRenderer>();
+        rend = GetComponent<MeshRenderer>();
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.transform.tag == "Player")
         {
-            rend.color = colorToTurnTo;
+            rend.material = colorToTurnTo;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.tag == "Player")
         {
-            rend.color = defaultColor;
+            rend.material = defaultColor;
         }
     }
 
