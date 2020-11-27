@@ -10,7 +10,7 @@ public class HPBar : MonoBehaviour
     public Text HP_bar;
 
     //Вход в зону
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Damage")
         {
@@ -20,7 +20,6 @@ public class HPBar : MonoBehaviour
 
             }
         }
-
 
         if (other.transform.tag == "HP_Add")
         {

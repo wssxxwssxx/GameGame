@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 6f;
     [SerializeField] private float sprintMoveSpeed = 7f;
     [SerializeField] private float crouchSpeed = 2.5f;
-    [SerializeField] private Collider2D standingCollider;
+    [SerializeField] private Collider standingCollider;
 
     [SerializeField] private bool sprintFlag;
     [SerializeField] private bool crouchFlag;
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private bool grounded;
     [SerializeField] private bool onDoor;
     [SerializeField] private Vector3 doorCoor;
@@ -21,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        rb = transform.GetComponent<Rigidbody2D>();
+        rb = transform.GetComponent<Rigidbody>();
     }
+
 
     private void Update()
     {
@@ -111,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void Jump(Rigidbody2D rb, float jumpForce)
+    private void Jump(Rigidbody rb, float jumpForce)
     {
         rb.velocity = Vector2.up * jumpForce;
     }
@@ -123,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.tag == "Door")
         {
@@ -131,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
             doorCoor = Vector3.zero;
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.transform.tag == "Door")
         {
@@ -139,7 +140,6 @@ public class PlayerMovement : MonoBehaviour
             doorCoor = collision.gameObject.GetComponent<FloorDoor>().pairDoor.transform.position;
         }
     }
-
 
 
 }
