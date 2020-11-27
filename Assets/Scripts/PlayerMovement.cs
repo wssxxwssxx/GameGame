@@ -9,14 +9,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sprintMoveSpeed = 7f;
     [SerializeField] private float crouchSpeed = 2.5f;
     [SerializeField] private Collider standingCollider;
-
     [SerializeField] private bool sprintFlag;
     [SerializeField] private bool crouchFlag;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private bool grounded;
     [SerializeField] private bool onDoor;
-    [SerializeField] private Vector3 doorCoor;
+    [SerializeField] private FieldOfView fieldOfView;
 
+    private Vector3 doorCoor;
+    private Vector3 mousePosition;
     private float doorTravelYOffset = .5f;
 
     private void Awake()
@@ -27,6 +28,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector3 mouseDirection = new Vector3(
+            mousePosition.x - transform.position.x,
+            mousePosition.y - transform.position.y,
+            0f
+            );
 
         grounded = transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
 
@@ -68,6 +76,10 @@ public class PlayerMovement : MonoBehaviour
             MoveBetweenDoors(doorCoor);
         }
 
+
+
+        fieldOfView.SetOrigin(transform.position);
+        fieldOfView.SetDirection(mouseDirection);
 
     }
 
