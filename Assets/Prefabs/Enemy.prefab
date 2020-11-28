@@ -125,9 +125,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b24df8ccec3641318dcdd655e6662fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 2.5
   asd: 0
   patrolPos: []
   startWaitTime: 0
   movementDirection: 0
+  pffieldOfView: {fileID: 641241996939125900, guid: 8eebbf750faf1496a9bf190b7ec63411, type: 3}
+  fov: 90
+  viewDistance: 10
+  player: {fileID: 0}
   enemyState: 0

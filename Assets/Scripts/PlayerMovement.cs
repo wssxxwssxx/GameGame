@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private bool grounded;
     [SerializeField] private bool onDoor;
-    [SerializeField] private FieldOfView fieldOfView;
 
+    private float movementDirection;
     private Vector3 doorCoor;
     private Vector3 mousePosition;
     private float doorTravelYOffset = .5f;
@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        movementDirection = Input.GetAxis("Horizontal");
         mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Vector3 mouseDirection = new Vector3(
@@ -77,50 +78,28 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-
-        fieldOfView.SetOrigin(transform.position);
-        fieldOfView.SetDirection(mouseDirection);
-
     }
 
     private void FixedUpdate()
     {
 
-        if(Input.GetKey(KeyCode.D))
-        {
+        
             if(!crouchFlag && sprintFlag)
             {
-                MovePlayer(sprintMoveSpeed);
+                MovePlayer(sprintMoveSpeed, movementDirection);
             } else if (grounded && crouchFlag)
             {
-                MovePlayer(crouchSpeed);
+                MovePlayer(crouchSpeed, movementDirection);
             }
             else
-                MovePlayer(moveSpeed);
+                MovePlayer(moveSpeed, movementDirection);
 
-
-
-        } else if (Input.GetKey(KeyCode.A))
-        {
-            if (!crouchFlag && sprintFlag)
-            {
-                MovePlayer(-sprintMoveSpeed);
-            }
-            else if (grounded && crouchFlag)
-            {
-                MovePlayer(-crouchSpeed);
-            }
-            else
-                MovePlayer(-moveSpeed);
-        } else
-            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
-
-  
     }
 
-    private void MovePlayer(float moveSpeed)
+
+    private void MovePlayer(float moveSpeed, float direction)
     {
-        rb.velocity = new Vector3(moveSpeed, rb.velocity.y, 0f);
+        rb.velocity = new Vector3(moveSpeed * direction, rb.velocity.y, 0f);
 
     }
 
@@ -152,6 +131,33 @@ public class PlayerMovement : MonoBehaviour
             doorCoor = collision.gameObject.GetComponent<FloorDoor>().pairDoor.transform.position;
         }
     }
+
+
+    // Get Mouse Position
+    public Vector3 GetMouseWorldPosition()
+    {
+        Vector3 vec = GetMouseWorldPositionWithZ(Input.mousePosition, Camera.main);
+        vec.z = 0f;
+        return vec;
+    }
+
+    public Vector3 GetMouseWorldPositionWithZ()
+    {
+        return GetMouseWorldPositionWithZ(Input.mousePosition, Camera.main);
+    }
+
+    public Vector3 GetMouseWorldPositionWithZ(Camera worldCamera)
+    {
+        return GetMouseWorldPositionWithZ(Input.mousePosition, worldCamera);
+    }
+
+    public Vector3 GetMouseWorldPositionWithZ(Vector3 screenPosition, Camera worldCamera)
+    {
+        Vector3 worldPosition = worldCamera.ScreenToWorldPoint(screenPosition);
+        return worldPosition;
+    }
+
+
 
 
 }

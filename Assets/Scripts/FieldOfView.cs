@@ -5,12 +5,14 @@ using UnityEngine;
 public class FieldOfView : MonoBehaviour
 {
     private Mesh mesh;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask layerMaskObstacle;
+
     private Vector3 origin;
     private float startingAngle;
-    [SerializeField ]private float fov = 90f;
-    [SerializeField] private float viewDistance = 50f;
-    [SerializeField] private int rayCount = 50;
+    private float fov;
+    private float viewDistance;
+    private int rayCount = 50;
+    public RaycastHit hitSomething;
 
 
     private void Start()
@@ -18,13 +20,15 @@ public class FieldOfView : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         origin = Vector3.zero;
+
     }
 
 
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         float angle = startingAngle;
+
         float angleIncrease = fov / rayCount;
 
 
@@ -37,12 +41,12 @@ public class FieldOfView : MonoBehaviour
 
         int vertexIndex = 1;
         int triangleIndex = 0;
-        for(int i = 0; i <= rayCount; i ++)
+        for(int i = 0; i <= rayCount; i++)
         {
             Vector3 vertex;
 
-            RaycastHit hitSomething;
-              var hit = Physics.Raycast(origin, GetVectorFromAngle(angle), out hitSomething, viewDistance, layerMask);
+            var hit = Physics.Raycast(origin, GetVectorFromAngle(angle), out hitSomething, viewDistance, layerMaskObstacle);
+
             if(!hit)
             {
                 vertex = origin + GetVectorFromAngle(angle) * viewDistance;
@@ -102,6 +106,16 @@ public class FieldOfView : MonoBehaviour
     public void SetDirection(Vector3 aimDirection)
     {
         startingAngle = GetAngleFromVectorFloat(aimDirection) + fov / 2f;
+    }
+
+    public void SetFOV(float fov)
+    {
+        this.fov = fov;
+    }
+
+    public void SetViewDistance(float viewDistance)
+    {
+        this.viewDistance = viewDistance;
     }
   
 

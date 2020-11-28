@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3636700229228713941}
   - component: {fileID: 3636700229228713942}
   - component: {fileID: 3636700229228713936}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -152,7 +152,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   grounded: 0
   onDoor: 0
-  doorCoor: {x: 0, y: 0, z: 0}
 --- !u!114 &3636700229228713936
 MonoBehaviour:
   m_ObjectHideFlags: 0
