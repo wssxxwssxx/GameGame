@@ -6,19 +6,30 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 6f;
+    private float movementDirection;
+    private float doorTravelYOffset = .5f;
     [SerializeField] private float sprintMoveSpeed = 7f;
     [SerializeField] private float crouchSpeed = 2.5f;
-    [SerializeField] private Collider standingCollider;
+
     [SerializeField] private bool sprintFlag;
     [SerializeField] private bool crouchFlag;
-    [SerializeField] private Rigidbody rb;
     [SerializeField] private bool grounded;
     [SerializeField] private bool onDoor;
+    [SerializeField] private bool goingRight;
+    [SerializeField] private bool goingLeft;
 
-    private float movementDirection;
+
+    [SerializeField] private Collider standingCollider;
+    [SerializeField] private Rigidbody rb;
+
     private Vector3 doorCoor;
     private Vector3 mousePosition;
-    private float doorTravelYOffset = .5f;
+
+    // F - MeleeAttack
+    // Shift - Sprint
+    // Ctrl - Crouch
+    // Space - Jump
+
 
     private void Awake()
     {
@@ -28,6 +39,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        goingLeft = !goingRight;
+
+        if(rb.velocity.x > 0)
+        {
+            goingRight = true;
+
+        } else if(rb.velocity.x < 0)
+        {
+            goingRight = false;
+        }
+
+        if(goingRight)
+        {
+            gameObject.transform.FindChild("KnifeAttackPoint").transform.position =
+                new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+        } else if (goingLeft)
+        {
+            gameObject.transform.FindChild("KnifeAttackPoint").transform.position =
+                new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+
+        }
+
         movementDirection = Input.GetAxis("Horizontal");
         mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);

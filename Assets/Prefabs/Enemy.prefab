@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2179000795049645060}
   - component: {fileID: 2179000795049645061}
   - component: {fileID: 2179000795049645058}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,12 +126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2.5
-  asd: 0
-  patrolPos: []
   startWaitTime: 0
-  movementDirection: 0
-  pffieldOfView: {fileID: 641241996939125900, guid: 8eebbf750faf1496a9bf190b7ec63411, type: 3}
   fov: 90
   viewDistance: 10
   player: {fileID: 0}
+  patrolPos: []
+  pffieldOfView: {fileID: 641241996939125900, guid: 8eebbf750faf1496a9bf190b7ec63411, type: 3}
+  seePlayer: 0
+  goingLeft: 0
+  goingRight: 0
+  nextPatrolPos: 0
   enemyState: 0

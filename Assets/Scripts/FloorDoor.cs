@@ -8,7 +8,7 @@ public class FloorDoor : MonoBehaviour
     private MeshRenderer rend;
     [SerializeField] private Material colorToTurnTo;
     [SerializeField] private Material defaultColor;
-
+ 
 
     private void Start()
     {

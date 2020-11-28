@@ -49,12 +49,14 @@ public class ShootingEnemy : MonoBehaviour
     private void Start()
     {
         fieldOfView = Instantiate(pffieldOfView, null).GetComponent<FieldOfView>();
+        fieldOfView.transform.parent = gameObject.transform;
         fieldOfView.SetFOV(fov);
         fieldOfView.SetViewDistance(viewDistance);
     }
 
     private void Update()
     {
+        fieldOfView.transform.position = new Vector3(0f, 0f, 0f);
         goingLeft = !goingRight;
         if(seePlayer)
             enemyState = EnemyState.Chase;
